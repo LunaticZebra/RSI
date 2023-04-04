@@ -1,17 +1,45 @@
+import com.google.protobuf.ByteString;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+class Record{
+    String name;
+    int age;
+    float height;
+    boolean male;
+    String photoPath;
+
+    public Record(String name, int age, float height, boolean male, String photoPath) {
+        this.name = name;
+        this.age = age;
+        this.height = height;
+        this.male = male;
+        this.photoPath = photoPath;
+    }
+}
+
 public class GrpcServer {
+    static HashMap<String, Record> records = new HashMap<>();
+    static String directoryName = "GrpcServer/src/photos/";
     public static void main(String[] args) {
         int port = 50001;
         System.out.println("Starting gRPC server...");
         Server server  = ServerBuilder.forPort(port).addService(new MyServiceImpl()).build();
+        Record record1 = new Record("Maciej", 21, 180.5f, true, "KrasnoludInzynier.jpg");
+        Record record2 = new Record("Jakub", 25, 185.31f, true, "KrasnoludSkryba.jpg");
+        Record record3 = new Record("Julia", 27, 179.0f, false, "KrasnoludZwiadowca.jpg");
+        records.put("1", record1);
+        records.put("2", record2);
+        records.put("3", record3);
 
         try{
             server.start();
@@ -27,105 +55,102 @@ public class GrpcServer {
 
     }
     static class MyServiceImpl extends TestServiceGrpc.TestServiceImplBase {
-        ArrayList<TheRecord> records = new ArrayList<>();
 
-//        public void unaryProcedure(TheRequest req, StreamObserver<TheResponse> responseObserver) {
-//            String msg;
-//            System.out.println("...called UnaryProcedure - start");
-//            if(req.getAge() > 18) msg = "Mr/Ms" + req.getName();
-//            else msg = "Boy/Girl";
-//            TheResponse response = TheResponse.newBuilder().setMessage("Hello " + msg).build();
-//
-//            try{
-//                Thread.sleep(2000);
-//            }
-//            catch (InterruptedException e){
-//                e.printStackTrace();
-//            }
-//            responseObserver.onNext(response);
-//            responseObserver.onCompleted();
-//            System.out.println("...called UnaryProcedure - end");
-//        }
-//
-//        public void streamProcedure(TheRequest req, StreamObserver<TheResponse> responseObserver){
-//            final int NUM_OF_CHUNKS = 10;
-//            for(int i = 0; i < NUM_OF_CHUNKS; i++) {
-//                TheResponse response = TheResponse.newBuilder().setMessage("Stream chunk " + (i+1)).build();
-//                try {
-//                    Thread.sleep(500);
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                responseObserver.onNext(response);
-//            }
-//            responseObserver.onCompleted();
-//        }
-//
-//        public StreamObserver<TheRequest> streamToSrv(StreamObserver<TheResponse> responseObserver){
-//            HashMap<String, Integer> testMap = new HashMap<>();
-//            StreamObserver<TheRequest> srvObserver = new StreamObserver<TheRequest>() {
-//                @Override
-//                public void onNext(TheRequest theRequest) {
-//                    System.out.println("Received -" + theRequest.getName() + "- " + theRequest.getAge());
-//                    testMap.put(theRequest.getName(), theRequest.getAge());
-//                }
-//
-//                @Override
-//                public void onError(Throwable throwable) {
-//                    throwable.printStackTrace();
-//                }
-//
-//                @Override
-//                public void onCompleted() {
-//                    StringBuilder myResp = new StringBuilder();
-//                    for(Map.Entry<String, Integer> entry: testMap.entrySet()){
-//                        myResp.append(entry.getKey()).append("---").append(entry.getValue()).append("\n");
-//                    }
-//                    TheResponse response = TheResponse.newBuilder().setMessage(myResp.toString()).build();
-//                    responseObserver.onNext(response);
-//                    responseObserver.onCompleted();
-//                }
-//            };
-//            return srvObserver;
-//        }
+        public static String imagesFolder = "GrpcServer/files/";
+        public void saveRecord(TheRecord request, StreamObserver<TheRecordResponse> responseObserver){
+            Record record = new Record(request.getName(), request.getAge(), request.getHeight(), request.getMale(),
+                    request.getPhotoPath());
+            records.put(request.getId(), record);
 
-        public StreamObserver<TheRecord> sendRecords(StreamObserver<TheResponse> responseObserver){
+            StringBuilder responseMessage = new StringBuilder();
+            if(records.containsKey(request.getId()))  responseMessage.append("Updated ");
+            else responseMessage.append("Created ");
 
-            StreamObserver<TheRecord> srvObserver = new StreamObserver<>() {
-                @Override
-                public void onNext(TheRecord record) {
-                    System.out.println("Received -" + record.getName() + " " + record.getAge() + " " +
-                            record.getHeight() + " " + record.getMale());
-                    records.add(record);
-                }
+            responseMessage.append("following record:")
+                    .append("\nId: ").append(request.getId())
+                    .append("\nName: ").append(record.name)
+                    .append("\nAge: ").append(record.age)
+                    .append("\nHeight: ").append(record.height)
+                    .append("\nMale: ").append(record.male)
+                    .append("\nPhotoPath: ").append(record.photoPath);
 
-                @Override
-                public void onError(Throwable throwable) {
-                    throwable.printStackTrace();
-                }
+            var builder = TheRecordResponse.newBuilder()
+                    .setMessage(responseMessage.toString());
 
-                @Override
-                public void onCompleted() {
-//                    StringBuilder myResp = new StringBuilder();
-//                    for(TheRecord record: records){
-//                        myResp.append("Name").append(record.getName())
-//                                .append("\nHeight ").append(record.getHeight())
-//                                .append("\nAge ").append(record.getAge())
-//                                .append("Is male? ").append(record.getMale())
-//                    }
-//                    TheResponse response = TheResponse.newBuilder().setMessage(myResp.toString()).build();
-//                    responseObserver.onNext(response);
-//                    responseObserver.onCompleted();
-                    responseObserver.onNext(TheResponse.newBuilder().setMessage("Completed adding records").build());
-                    responseObserver.onCompleted();
-                }
-            };
-            return srvObserver;
+            responseObserver.onNext(builder.build());
+            responseObserver.onCompleted();
         }
-        public void getOneRecord(TheRecordRequest request, StreamObserver<TheRecord> streamObserver){
-            if(request.getRecordPosition() >= 0 && request.getRecordPosition() < records.size()){
-                streamObserver.onNext(records.get(request.getRecordPosition()));
+
+        public void readRecord(TheRecordRequest request, StreamObserver<TheRecord> responseObserver){
+
+            Record record = records.get(request.getRecordId());
+
+            var builder = TheRecord.newBuilder();
+            if(record != null) {
+                builder.setAge(record.age).setHeight(record.height).setId(request.getRecordId()).
+                        setMale(record.male).setPhotoPath(record.photoPath).setName(record.name);
             }
+            else
+            {
+                builder.setAge(0).setHeight(0).setId("None").
+                        setMale(false).setPhotoPath("None").setName("None");
+            }
+            responseObserver.onNext(builder.build());
+            responseObserver.onCompleted();
+
+        }
+
+        public void readAllRecordsIds(AllRecordsRequest request, StreamObserver<TheRecordResponse> responseObserver){
+            var builder = TheRecordResponse.newBuilder().setMessage(records.keySet().toString());
+            responseObserver.onNext(builder.build());
+            responseObserver.onCompleted();
+        }
+
+        public void deleteRecord(TheRecordRequest request, StreamObserver<TheRecordResponse> response){
+            StringBuilder message = new StringBuilder();
+            if(records.remove(request.getRecordId()) != null){
+                message.append("Deleted record with id = ");
+            }
+            else {
+                message.append("Could not find record with id of ");
+            }
+            message.append(request.getRecordId());
+            var builder = TheRecordResponse.newBuilder().setMessage(message.toString());
+            response.onNext(builder.build());
+            response.onCompleted();
+        }
+
+        public void getPhoto(ThePhotoRequest request, StreamObserver<ThePhotoResponse> response){
+            int bufferSize = 10000;
+            String fileName = directoryName + request.getFilename();
+            File file = new File(fileName);
+
+            if(file.exists() && !file.isDirectory()){
+                try{
+                    FileInputStream fis = new FileInputStream(file);
+
+                    byte[] buffer = new byte[bufferSize];
+                    int sentBytes = 0;
+
+                    while ((sentBytes = fis.read(buffer)) > 0) {
+                        response.onNext(ThePhotoResponse.newBuilder()
+                                .setChunk(ByteString.copyFrom(buffer))
+                                .setNumOfBytes(sentBytes)
+                                .build());
+                    }
+                    response.onCompleted();
+                }
+                catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else{
+                response.onError(new Exception("File not found"));
+            }
+
+
         }
     }
 }

@@ -6,32 +6,56 @@ public interface TheRecordOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string name = 1;</code>
+   * <code>string id = 1;</code>
+   * @return The id.
+   */
+  java.lang.String getId();
+  /**
+   * <code>string id = 1;</code>
+   * @return The bytes for id.
+   */
+  com.google.protobuf.ByteString
+      getIdBytes();
+
+  /**
+   * <code>string name = 2;</code>
    * @return The name.
    */
   java.lang.String getName();
   /**
-   * <code>string name = 1;</code>
+   * <code>string name = 2;</code>
    * @return The bytes for name.
    */
   com.google.protobuf.ByteString
       getNameBytes();
 
   /**
-   * <code>int32 age = 2;</code>
+   * <code>int32 age = 3;</code>
    * @return The age.
    */
   int getAge();
 
   /**
-   * <code>float height = 3;</code>
+   * <code>float height = 4;</code>
    * @return The height.
    */
   float getHeight();
 
   /**
-   * <code>bool male = 4;</code>
+   * <code>bool male = 5;</code>
    * @return The male.
    */
   boolean getMale();
+
+  /**
+   * <code>string photoPath = 6;</code>
+   * @return The photoPath.
+   */
+  java.lang.String getPhotoPath();
+  /**
+   * <code>string photoPath = 6;</code>
+   * @return The bytes for photoPath.
+   */
+  com.google.protobuf.ByteString
+      getPhotoPathBytes();
 }

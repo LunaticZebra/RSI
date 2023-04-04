@@ -28,10 +28,30 @@ public final class GrpcAppProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_TheRecordRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_TheRecordResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_TheRecordResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_TheRecord_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_TheRecord_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_AllRecordsRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_AllRecordsRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ThePhotoRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ThePhotoRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ThePhotoResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ThePhotoResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -43,18 +63,26 @@ public final class GrpcAppProto {
     java.lang.String[] descriptorData = {
       "\n\023GrpcInterface.proto\"\'\n\nTheRequest\022\014\n\004n" +
       "ame\030\001 \001(\t\022\013\n\003age\030\002 \001(\005\"\036\n\013TheResponse\022\017\n" +
-      "\007message\030\001 \001(\t\"*\n\020TheRecordRequest\022\026\n\016re" +
-      "cordPosition\030\001 \001(\005\"D\n\tTheRecord\022\014\n\004name\030" +
-      "\001 \001(\t\022\013\n\003age\030\002 \001(\005\022\016\n\006height\030\003 \001(\002\022\014\n\004ma" +
-      "le\030\004 \001(\0102\256\002\n\013TestService\022-\n\016unaryProcedu" +
-      "re\022\013.TheRequest\032\014.TheResponse\"\000\0220\n\017strea" +
-      "mProcedure\022\013.TheRequest\032\014.TheResponse\"\0000" +
-      "\001\022,\n\013streamToSrv\022\013.TheRequest\032\014.TheRespo" +
-      "nse\"\000(\001\022+\n\013sendRecords\022\n.TheRecord\032\014.The" +
-      "Response\"\000(\001\0222\n\rgetAllRecords\022\021.TheRecor" +
-      "dRequest\032\n.TheRecord\"\0000\001\022/\n\014getOneRecord" +
-      "\022\021.TheRecordRequest\032\n.TheRecord\"\000B\026B\014Grp" +
-      "cAppProtoP\001\242\002\003GAPb\006proto3"
+      "\007message\030\001 \001(\t\"$\n\020TheRecordRequest\022\020\n\010re" +
+      "cordId\030\001 \001(\t\"$\n\021TheRecordResponse\022\017\n\007mes" +
+      "sage\030\001 \001(\t\"c\n\tTheRecord\022\n\n\002id\030\001 \001(\t\022\014\n\004n" +
+      "ame\030\002 \001(\t\022\013\n\003age\030\003 \001(\005\022\016\n\006height\030\004 \001(\002\022\014" +
+      "\n\004male\030\005 \001(\010\022\021\n\tphotoPath\030\006 \001(\t\"\023\n\021AllRe" +
+      "cordsRequest\"#\n\017ThePhotoRequest\022\020\n\010filen" +
+      "ame\030\001 \001(\t\"7\n\020ThePhotoResponse\022\024\n\014num_of_" +
+      "bytes\030\001 \001(\005\022\r\n\005chunk\030\002 \001(\0142\250\003\n\013TestServi" +
+      "ce\022-\n\016unaryProcedure\022\013.TheRequest\032\014.TheR" +
+      "esponse\"\000\0220\n\017streamProcedure\022\013.TheReques" +
+      "t\032\014.TheResponse\"\0000\001\022,\n\013streamToSrv\022\013.The" +
+      "Request\032\014.TheResponse\"\000(\001\022.\n\nsaveRecord\022" +
+      "\n.TheRecord\032\022.TheRecordResponse\"\000\022-\n\nrea" +
+      "dRecord\022\021.TheRecordRequest\032\n.TheRecord\"\000" +
+      "\022=\n\021readAllRecordsIds\022\022.AllRecordsReques" +
+      "t\032\022.TheRecordResponse\"\000\0227\n\014deleteRecord\022" +
+      "\021.TheRecordRequest\032\022.TheRecordResponse\"\000" +
+      "\0223\n\010getPhoto\022\020.ThePhotoRequest\032\021.ThePhot" +
+      "oResponse\"\0000\001B\026B\014GrpcAppProtoP\001\242\002\003GAPb\006p" +
+      "roto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -77,13 +105,37 @@ public final class GrpcAppProto {
     internal_static_TheRecordRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_TheRecordRequest_descriptor,
-        new java.lang.String[] { "RecordPosition", });
-    internal_static_TheRecord_descriptor =
+        new java.lang.String[] { "RecordId", });
+    internal_static_TheRecordResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
+    internal_static_TheRecordResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_TheRecordResponse_descriptor,
+        new java.lang.String[] { "Message", });
+    internal_static_TheRecord_descriptor =
+      getDescriptor().getMessageTypes().get(4);
     internal_static_TheRecord_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_TheRecord_descriptor,
-        new java.lang.String[] { "Name", "Age", "Height", "Male", });
+        new java.lang.String[] { "Id", "Name", "Age", "Height", "Male", "PhotoPath", });
+    internal_static_AllRecordsRequest_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_AllRecordsRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_AllRecordsRequest_descriptor,
+        new java.lang.String[] { });
+    internal_static_ThePhotoRequest_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_ThePhotoRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ThePhotoRequest_descriptor,
+        new java.lang.String[] { "Filename", });
+    internal_static_ThePhotoResponse_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_ThePhotoResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ThePhotoResponse_descriptor,
+        new java.lang.String[] { "NumOfBytes", "Chunk", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

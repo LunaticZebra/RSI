@@ -8,9 +8,11 @@ service TestService {
   rpc unaryProcedure (TheRequest) returns (TheResponse) {}
   rpc streamProcedure (TheRequest) returns (stream TheResponse) {}
   rpc streamToSrv (stream TheRequest) returns (TheResponse) {}
-  rpc sendRecords (stream TheRecord) returns (TheResponse) {}
-  rpc getAllRecords (TheRecordRequest) returns (stream TheRecord) {}
-  rpc getOneRecord (TheRecordRequest) returns (TheRecord) {}
+  rpc saveRecord(TheRecord) returns (TheRecordResponse) {}
+  rpc readRecord(TheRecordRequest) returns (TheRecord) {}
+  rpc readAllRecordsIds(AllRecordsRequest) returns (TheRecordResponse) {}
+  rpc deleteRecord(TheRecordRequest) returns (TheRecordResponse) {}
+  rpc getPhoto(ThePhotoRequest) returns (stream ThePhotoResponse) {}
 
 }
 // The request message containing the user's name and age.
@@ -23,12 +25,32 @@ message TheResponse {
   string message = 1;
 }
 message TheRecordRequest{
-  int32 recordPosition = 1;
+  string recordId = 1;
+}
+
+
+message TheRecordResponse{
+  string message = 1;
 }
 
 message TheRecord {
-  string name = 1;
-  int32 age = 2;
-  float height = 3;
-  bool male = 4;
+  string id = 1;
+  string name = 2;
+  int32 age = 3;
+  float height = 4;
+  bool male = 5;
+  string photoPath = 6;
+}
+
+message AllRecordsRequest{
+
+}
+
+message ThePhotoRequest{
+  string filename = 1;
+}
+
+message ThePhotoResponse{
+  int32 num_of_bytes = 1;
+  bytes chunk = 2;
 }

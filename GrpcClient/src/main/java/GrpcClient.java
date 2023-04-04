@@ -2,7 +2,12 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -10,117 +15,152 @@ public class GrpcClient {
     public static void main(String[] args) {
         String address = "localhost"; //here we use service on the same host
         int port = 50001;
-        TestServiceGrpc.TestServiceBlockingStub bStub;
         System.out.println("Running gRPC client...");
         ManagedChannel channel = ManagedChannelBuilder.forAddress(address, port).usePlaintext().build();
-//        bStub = TestServiceGrpc.newBlockingStub(channel);
-//        TheRequest request = TheRequest.newBuilder().setName("Maciej")
-//                .setAge(21).build();
-//        System.out.println("...calling unaryProcedure");
-//        TheResponse response = bStub.unaryProcedure(request);
-//        System.out.println("...after calling unaryProcedure");
-//        System.out.println("--> Response: " + response);
-//
-//        TestServiceGrpc.TestServiceStub nStub;
-//        nStub = TestServiceGrpc.newStub(channel);
-//        System.out.println("...async calling unaryProcedure");
-//
-//        nStub.unaryProcedure(request, new UnaryOrbs());
-//        System.out.println("....after async calling unaryProcedure");
-//        Scanner scanner = new Scanner(System.in);
-//
-//        String input = scanner.next();
-//        while(!input.equals("stop")) {
-//            input = scanner.next();
-//        }
-//
-//        Iterator<TheResponse> respIterator;
-//        System.out.println("...calling streamProcedure");
-//        bStub = TestServiceGrpc.newBlockingStub(channel);
-//        respIterator = bStub.streamProcedure(TheRequest.newBuilder().build());
-//        TheResponse strResponse;
-//
-//        while(respIterator.hasNext()) {
-//            strResponse = respIterator.next();
-//            System.out.println("-->" + strResponse.getMessage());
-//        }
-//        System.out.println("...after calling streamProcedure");
-//
-//        TestServiceGrpc.TestServiceStub nStub;
-//        nStub = TestServiceGrpc.newStub(channel);
-//        System.out.println("...async calling streamProcedure");
-//        nStub.streamProcedure(TheRequest.newBuilder().build(), new UnaryOrbs());
-//        System.out.println("...after async calling streamProcedure");
-//        Scanner scanner = new Scanner(System.in);
-//        String input = scanner.next();
-//        while(!input.equals("stop")) {
-//            input = scanner.next();
-//        }
 
-//        TheRequest r1 = TheRequest.newBuilder().setAge(15).setName("Ala").build();
-//        TheRequest r2 = TheRequest.newBuilder().setAge(25).setName("Olek").build();
-//        TheRequest r3 = TheRequest.newBuilder().setAge(51).setName("Maciek").build();
-//        TheRequest r4 = TheRequest.newBuilder().setAge(23).setName("Kuba").build();
-//        strReqObserver.onNext(r1);
-//        strReqObserver.onNext(r2);
-//        strReqObserver.onNext(r3);
-//        strReqObserver.onNext(r4);
-//        strReqObserver.onCompleted();
+        //Blocking stub
+        TestServiceGrpc.TestServiceBlockingStub bStub;
         TestServiceGrpc.TestServiceStub nStub;
+        bStub = TestServiceGrpc.newBlockingStub(channel);
         nStub = TestServiceGrpc.newStub(channel);
-        StreamObserver<TheRecord> strReqObserver = nStub.sendRecords(new RecordObs());
-
-        ArrayList<TheRecord> records = new ArrayList<>();
-        for(int i = 0; i < 5; i++){
-            TheRecord r = TheRecord.newBuilder().setAge(20 + i).
-                    setName("Olek" + i).setHeight(1.8f + (i * 0.05f)).setMale(i%2==0).build();
-            records.add(r);
-        }
-        for(TheRecord r: records){
-            strReqObserver.onNext(r);
-        }
-        strReqObserver.onCompleted();
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.next();
-        while(!input.equals("stop")) {
-            input = scanner.next();
+        int option = scanner.nextInt();
+        while(option != 0) {
+
+            printMenu();
+            option = scanner.nextInt();
+            optionChosen(option, scanner, bStub, nStub);
         }
         channel.shutdown();
     }
 
-    private static class UnaryOrbs implements StreamObserver<TheResponse> {
+    private static class PhotoObs implements StreamObserver<ThePhotoResponse> {
 
+        static String downloadFolder = "GrpcClient/src/downloadFolder/";
+        FileOutputStream fos;
+        File fileToSave;
+        public PhotoObs(String filename){
+            try{
+                fileToSave = new File(downloadFolder + filename);
+                fileToSave.createNewFile();
+                fos = new FileOutputStream(fileToSave);
+
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                System.out.println();
+                System.out.println(fileToSave.toString());
+                throw new RuntimeException(e);
+            }
+        }
         @Override
-        public void onNext(TheResponse theResponse) {
-            System.out.println("-->async unary onNext: " + theResponse.getMessage());
+        public void onNext(ThePhotoResponse thePhotoResponse) {
+            try{
+                fos.write(thePhotoResponse.getChunk().toByteArray());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
-        public void onError(Throwable throwable){
-            System.out.println("-->async unary onError");
+        public void onError(Throwable throwable) {
+            fileToSave.delete();
+            System.out.println("Could not find image with path: " + fileToSave.toString());
         }
 
         @Override
-        public void onCompleted(){
-            System.out.println("-->async unary onCompleted");
+        public void onCompleted() {
+            try{
+                fos.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("Finished downloading image!");
         }
     }
 
-    private static class RecordObs implements StreamObserver<TheResponse> {
+    private static void printMenu(){
+        System.out.println("--------MENU--------");
+        System.out.println("1.Send record");
+        System.out.println("2.Read record");
+        System.out.println("3.Read all records ids");
+        System.out.println("4.Delete record");
+        System.out.println("5.Download photo");
+        System.out.println("0.Exit");
+    }
 
-        @Override
-        public void onNext(TheResponse theResponse) {
-            System.out.println("--> async record onNext: " + theResponse.getMessage());
+    private static void optionChosen(int option, Scanner input, TestServiceGrpc.TestServiceBlockingStub bStub,
+                                     TestServiceGrpc.TestServiceStub nStub){
+        switch(option){
+            case 1:
+                sendRecord(input, bStub);
+                break;
+            case 2:
+                readRecord(input, bStub);
+                break;
+            case 3:
+                readAllRecordsIds(bStub);
+            case 4:
+                deleteRecord(input, bStub);
+                break;
+            case 5:
+                getPhoto(input, nStub);
+                break;
+            default:
+                break;
         }
+    }
 
-        @Override
-        public void onError(Throwable throwable){
-            System.out.println("-->async record onError");
-        }
+    private static void sendRecord(Scanner input, TestServiceGrpc.TestServiceBlockingStub bStub){
+        var requestBuilder = TheRecord.newBuilder();
+        System.out.println("Provide id");
+        requestBuilder.setId(input.next());
+        System.out.println("Provide name");
+        requestBuilder.setName(input.next());
 
-        @Override
-        public void onCompleted(){
-            System.out.println("-->async record onCompleted");
+        try {
+            System.out.println("Provide age");
+            requestBuilder.setAge(input.nextInt());
+            System.out.println("Provide height");
+            requestBuilder.setHeight(input.nextFloat());
+            System.out.println("Is it male?");
+            requestBuilder.setMale(input.nextBoolean());
+            System.out.println("Provide path to photo");
+            requestBuilder.setPhotoPath(input.next());
+            TheRecordResponse response = bStub.saveRecord(requestBuilder.build());
+            System.out.println("Response from the server -> " + response);
         }
+        catch(InputMismatchException e){
+            System.out.println("---------Incorrect value!---------");
+        }
+    }
+
+    private static void readRecord(Scanner input, TestServiceGrpc.TestServiceBlockingStub bStub){
+        var requestBuilder = TheRecordRequest.newBuilder();
+        System.out.println("Provide id");
+        requestBuilder.setRecordId(input.next());
+        TheRecord response = bStub.readRecord(requestBuilder.build());
+        System.out.println("The response -> " + response);
+    }
+
+    private static void readAllRecordsIds(TestServiceGrpc.TestServiceBlockingStub bStub){
+        var request = AllRecordsRequest.newBuilder().build();
+        TheRecordResponse response = bStub.readAllRecordsIds(request);
+        System.out.println("All ids -> " + response);
+    }
+
+    private static void deleteRecord(Scanner input, TestServiceGrpc.TestServiceBlockingStub bStub){
+        var requestBuilder = TheRecordRequest.newBuilder();
+        System.out.println("Provide id");
+        requestBuilder.setRecordId(input.next());
+        TheRecordResponse response = bStub.deleteRecord(requestBuilder.build());
+        System.out.println("Response -> " + response);
+    }
+
+    private static void getPhoto(Scanner input, TestServiceGrpc.TestServiceStub nStub){
+        System.out.println("Provide filename");
+        String filename = input.next().trim();
+
+        nStub.getPhoto(ThePhotoRequest.newBuilder().setFilename(filename).build(), new PhotoObs(filename));
     }
 }

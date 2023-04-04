@@ -14,7 +14,9 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private TheRecord() {
+    id_ = "";
     name_ = "";
+    photoPath_ = "";
   }
 
   @java.lang.Override
@@ -37,11 +39,50 @@ private static final long serialVersionUID = 0L;
             TheRecord.class, TheRecord.Builder.class);
   }
 
-  public static final int NAME_FIELD_NUMBER = 1;
+  public static final int ID_FIELD_NUMBER = 1;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object id_ = "";
+  /**
+   * <code>string id = 1;</code>
+   * @return The id.
+   */
+  @java.lang.Override
+  public java.lang.String getId() {
+    java.lang.Object ref = id_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      id_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string id = 1;</code>
+   * @return The bytes for id.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getIdBytes() {
+    java.lang.Object ref = id_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      id_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int NAME_FIELD_NUMBER = 2;
   @SuppressWarnings("serial")
   private volatile java.lang.Object name_ = "";
   /**
-   * <code>string name = 1;</code>
+   * <code>string name = 2;</code>
    * @return The name.
    */
   @java.lang.Override
@@ -58,7 +99,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string name = 1;</code>
+   * <code>string name = 2;</code>
    * @return The bytes for name.
    */
   @java.lang.Override
@@ -76,10 +117,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int AGE_FIELD_NUMBER = 2;
+  public static final int AGE_FIELD_NUMBER = 3;
   private int age_ = 0;
   /**
-   * <code>int32 age = 2;</code>
+   * <code>int32 age = 3;</code>
    * @return The age.
    */
   @java.lang.Override
@@ -87,10 +128,10 @@ private static final long serialVersionUID = 0L;
     return age_;
   }
 
-  public static final int HEIGHT_FIELD_NUMBER = 3;
+  public static final int HEIGHT_FIELD_NUMBER = 4;
   private float height_ = 0F;
   /**
-   * <code>float height = 3;</code>
+   * <code>float height = 4;</code>
    * @return The height.
    */
   @java.lang.Override
@@ -98,15 +139,54 @@ private static final long serialVersionUID = 0L;
     return height_;
   }
 
-  public static final int MALE_FIELD_NUMBER = 4;
+  public static final int MALE_FIELD_NUMBER = 5;
   private boolean male_ = false;
   /**
-   * <code>bool male = 4;</code>
+   * <code>bool male = 5;</code>
    * @return The male.
    */
   @java.lang.Override
   public boolean getMale() {
     return male_;
+  }
+
+  public static final int PHOTOPATH_FIELD_NUMBER = 6;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object photoPath_ = "";
+  /**
+   * <code>string photoPath = 6;</code>
+   * @return The photoPath.
+   */
+  @java.lang.Override
+  public java.lang.String getPhotoPath() {
+    java.lang.Object ref = photoPath_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      photoPath_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string photoPath = 6;</code>
+   * @return The bytes for photoPath.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getPhotoPathBytes() {
+    java.lang.Object ref = photoPath_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      photoPath_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -123,17 +203,23 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
+    }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
     }
     if (age_ != 0) {
-      output.writeInt32(2, age_);
+      output.writeInt32(3, age_);
     }
     if (java.lang.Float.floatToRawIntBits(height_) != 0) {
-      output.writeFloat(3, height_);
+      output.writeFloat(4, height_);
     }
     if (male_ != false) {
-      output.writeBool(4, male_);
+      output.writeBool(5, male_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(photoPath_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, photoPath_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -144,20 +230,26 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
+    }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
     }
     if (age_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, age_);
+        .computeInt32Size(3, age_);
     }
     if (java.lang.Float.floatToRawIntBits(height_) != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeFloatSize(3, height_);
+        .computeFloatSize(4, height_);
     }
     if (male_ != false) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(4, male_);
+        .computeBoolSize(5, male_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(photoPath_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, photoPath_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -174,6 +266,8 @@ private static final long serialVersionUID = 0L;
     }
     TheRecord other = (TheRecord) obj;
 
+    if (!getId()
+        .equals(other.getId())) return false;
     if (!getName()
         .equals(other.getName())) return false;
     if (getAge()
@@ -183,6 +277,8 @@ private static final long serialVersionUID = 0L;
             other.getHeight())) return false;
     if (getMale()
         != other.getMale()) return false;
+    if (!getPhotoPath()
+        .equals(other.getPhotoPath())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -194,6 +290,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + ID_FIELD_NUMBER;
+    hash = (53 * hash) + getId().hashCode();
     hash = (37 * hash) + NAME_FIELD_NUMBER;
     hash = (53 * hash) + getName().hashCode();
     hash = (37 * hash) + AGE_FIELD_NUMBER;
@@ -204,6 +302,8 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + MALE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getMale());
+    hash = (37 * hash) + PHOTOPATH_FIELD_NUMBER;
+    hash = (53 * hash) + getPhotoPath().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -333,10 +433,12 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
+      id_ = "";
       name_ = "";
       age_ = 0;
       height_ = 0F;
       male_ = false;
+      photoPath_ = "";
       return this;
     }
 
@@ -371,16 +473,22 @@ private static final long serialVersionUID = 0L;
     private void buildPartial0(TheRecord result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.name_ = name_;
+        result.id_ = id_;
       }
       if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.age_ = age_;
+        result.name_ = name_;
       }
       if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.height_ = height_;
+        result.age_ = age_;
       }
       if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.height_ = height_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
         result.male_ = male_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        result.photoPath_ = photoPath_;
       }
     }
 
@@ -396,9 +504,14 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(TheRecord other) {
       if (other == TheRecord.getDefaultInstance()) return this;
+      if (!other.getId().isEmpty()) {
+        id_ = other.id_;
+        bitField0_ |= 0x00000001;
+        onChanged();
+      }
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (other.getAge() != 0) {
@@ -409,6 +522,11 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getMale() != false) {
         setMale(other.getMale());
+      }
+      if (!other.getPhotoPath().isEmpty()) {
+        photoPath_ = other.photoPath_;
+        bitField0_ |= 0x00000020;
+        onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -437,25 +555,35 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              name_ = input.readStringRequireUtf8();
+              id_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000001;
               break;
             } // case 10
-            case 16: {
-              age_ = input.readInt32();
+            case 18: {
+              name_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000002;
               break;
-            } // case 16
-            case 29: {
-              height_ = input.readFloat();
+            } // case 18
+            case 24: {
+              age_ = input.readInt32();
               bitField0_ |= 0x00000004;
               break;
-            } // case 29
-            case 32: {
-              male_ = input.readBool();
+            } // case 24
+            case 37: {
+              height_ = input.readFloat();
               bitField0_ |= 0x00000008;
               break;
-            } // case 32
+            } // case 37
+            case 40: {
+              male_ = input.readBool();
+              bitField0_ |= 0x00000010;
+              break;
+            } // case 40
+            case 50: {
+              photoPath_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000020;
+              break;
+            } // case 50
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -473,9 +601,81 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
+    private java.lang.Object id_ = "";
+    /**
+     * <code>string id = 1;</code>
+     * @return The id.
+     */
+    public java.lang.String getId() {
+      java.lang.Object ref = id_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        id_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string id = 1;</code>
+     * @return The bytes for id.
+     */
+    public com.google.protobuf.ByteString
+        getIdBytes() {
+      java.lang.Object ref = id_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        id_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string id = 1;</code>
+     * @param value The id to set.
+     * @return This builder for chaining.
+     */
+    public Builder setId(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      id_ = value;
+      bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string id = 1;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearId() {
+      id_ = getDefaultInstance().getId();
+      bitField0_ = (bitField0_ & ~0x00000001);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string id = 1;</code>
+     * @param value The bytes for id to set.
+     * @return This builder for chaining.
+     */
+    public Builder setIdBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      id_ = value;
+      bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object name_ = "";
     /**
-     * <code>string name = 1;</code>
+     * <code>string name = 2;</code>
      * @return The name.
      */
     public java.lang.String getName() {
@@ -491,7 +691,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string name = 1;</code>
+     * <code>string name = 2;</code>
      * @return The bytes for name.
      */
     public com.google.protobuf.ByteString
@@ -508,7 +708,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string name = 1;</code>
+     * <code>string name = 2;</code>
      * @param value The name to set.
      * @return This builder for chaining.
      */
@@ -516,22 +716,22 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       name_ = value;
-      bitField0_ |= 0x00000001;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
     /**
-     * <code>string name = 1;</code>
+     * <code>string name = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearName() {
       name_ = getDefaultInstance().getName();
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
     /**
-     * <code>string name = 1;</code>
+     * <code>string name = 2;</code>
      * @param value The bytes for name to set.
      * @return This builder for chaining.
      */
@@ -540,14 +740,14 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       name_ = value;
-      bitField0_ |= 0x00000001;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
 
     private int age_ ;
     /**
-     * <code>int32 age = 2;</code>
+     * <code>int32 age = 3;</code>
      * @return The age.
      */
     @java.lang.Override
@@ -555,23 +755,23 @@ private static final long serialVersionUID = 0L;
       return age_;
     }
     /**
-     * <code>int32 age = 2;</code>
+     * <code>int32 age = 3;</code>
      * @param value The age to set.
      * @return This builder for chaining.
      */
     public Builder setAge(int value) {
 
       age_ = value;
-      bitField0_ |= 0x00000002;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 age = 2;</code>
+     * <code>int32 age = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearAge() {
-      bitField0_ = (bitField0_ & ~0x00000002);
+      bitField0_ = (bitField0_ & ~0x00000004);
       age_ = 0;
       onChanged();
       return this;
@@ -579,7 +779,7 @@ private static final long serialVersionUID = 0L;
 
     private float height_ ;
     /**
-     * <code>float height = 3;</code>
+     * <code>float height = 4;</code>
      * @return The height.
      */
     @java.lang.Override
@@ -587,23 +787,23 @@ private static final long serialVersionUID = 0L;
       return height_;
     }
     /**
-     * <code>float height = 3;</code>
+     * <code>float height = 4;</code>
      * @param value The height to set.
      * @return This builder for chaining.
      */
     public Builder setHeight(float value) {
 
       height_ = value;
-      bitField0_ |= 0x00000004;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
     /**
-     * <code>float height = 3;</code>
+     * <code>float height = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearHeight() {
-      bitField0_ = (bitField0_ & ~0x00000004);
+      bitField0_ = (bitField0_ & ~0x00000008);
       height_ = 0F;
       onChanged();
       return this;
@@ -611,7 +811,7 @@ private static final long serialVersionUID = 0L;
 
     private boolean male_ ;
     /**
-     * <code>bool male = 4;</code>
+     * <code>bool male = 5;</code>
      * @return The male.
      */
     @java.lang.Override
@@ -619,24 +819,96 @@ private static final long serialVersionUID = 0L;
       return male_;
     }
     /**
-     * <code>bool male = 4;</code>
+     * <code>bool male = 5;</code>
      * @param value The male to set.
      * @return This builder for chaining.
      */
     public Builder setMale(boolean value) {
 
       male_ = value;
-      bitField0_ |= 0x00000008;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
     /**
-     * <code>bool male = 4;</code>
+     * <code>bool male = 5;</code>
      * @return This builder for chaining.
      */
     public Builder clearMale() {
-      bitField0_ = (bitField0_ & ~0x00000008);
+      bitField0_ = (bitField0_ & ~0x00000010);
       male_ = false;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object photoPath_ = "";
+    /**
+     * <code>string photoPath = 6;</code>
+     * @return The photoPath.
+     */
+    public java.lang.String getPhotoPath() {
+      java.lang.Object ref = photoPath_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        photoPath_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string photoPath = 6;</code>
+     * @return The bytes for photoPath.
+     */
+    public com.google.protobuf.ByteString
+        getPhotoPathBytes() {
+      java.lang.Object ref = photoPath_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        photoPath_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string photoPath = 6;</code>
+     * @param value The photoPath to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPhotoPath(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      photoPath_ = value;
+      bitField0_ |= 0x00000020;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string photoPath = 6;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearPhotoPath() {
+      photoPath_ = getDefaultInstance().getPhotoPath();
+      bitField0_ = (bitField0_ & ~0x00000020);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string photoPath = 6;</code>
+     * @param value The bytes for photoPath to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPhotoPathBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      photoPath_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }

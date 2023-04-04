@@ -110,96 +110,158 @@ public final class TestServiceGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<TheRecord,
-      TheResponse> getSendRecordsMethod;
+      TheRecordResponse> getSaveRecordMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "sendRecords",
+      fullMethodName = SERVICE_NAME + '/' + "saveRecord",
       requestType = TheRecord.class,
-      responseType = TheResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+      responseType = TheRecordResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<TheRecord,
-      TheResponse> getSendRecordsMethod() {
-    io.grpc.MethodDescriptor<TheRecord, TheResponse> getSendRecordsMethod;
-    if ((getSendRecordsMethod = TestServiceGrpc.getSendRecordsMethod) == null) {
+      TheRecordResponse> getSaveRecordMethod() {
+    io.grpc.MethodDescriptor<TheRecord, TheRecordResponse> getSaveRecordMethod;
+    if ((getSaveRecordMethod = TestServiceGrpc.getSaveRecordMethod) == null) {
       synchronized (TestServiceGrpc.class) {
-        if ((getSendRecordsMethod = TestServiceGrpc.getSendRecordsMethod) == null) {
-          TestServiceGrpc.getSendRecordsMethod = getSendRecordsMethod =
-              io.grpc.MethodDescriptor.<TheRecord, TheResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "sendRecords"))
+        if ((getSaveRecordMethod = TestServiceGrpc.getSaveRecordMethod) == null) {
+          TestServiceGrpc.getSaveRecordMethod = getSaveRecordMethod =
+              io.grpc.MethodDescriptor.<TheRecord, TheRecordResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "saveRecord"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   TheRecord.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  TheResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new TestServiceMethodDescriptorSupplier("sendRecords"))
+                  TheRecordResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new TestServiceMethodDescriptorSupplier("saveRecord"))
               .build();
         }
       }
     }
-    return getSendRecordsMethod;
+    return getSaveRecordMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<TheRecordRequest,
-      TheRecord> getGetAllRecordsMethod;
+      TheRecord> getReadRecordMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "getAllRecords",
-      requestType = TheRecordRequest.class,
-      responseType = TheRecord.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<TheRecordRequest,
-      TheRecord> getGetAllRecordsMethod() {
-    io.grpc.MethodDescriptor<TheRecordRequest, TheRecord> getGetAllRecordsMethod;
-    if ((getGetAllRecordsMethod = TestServiceGrpc.getGetAllRecordsMethod) == null) {
-      synchronized (TestServiceGrpc.class) {
-        if ((getGetAllRecordsMethod = TestServiceGrpc.getGetAllRecordsMethod) == null) {
-          TestServiceGrpc.getGetAllRecordsMethod = getGetAllRecordsMethod =
-              io.grpc.MethodDescriptor.<TheRecordRequest, TheRecord>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getAllRecords"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  TheRecordRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  TheRecord.getDefaultInstance()))
-              .setSchemaDescriptor(new TestServiceMethodDescriptorSupplier("getAllRecords"))
-              .build();
-        }
-      }
-    }
-    return getGetAllRecordsMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<TheRecordRequest,
-      TheRecord> getGetOneRecordMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "getOneRecord",
+      fullMethodName = SERVICE_NAME + '/' + "readRecord",
       requestType = TheRecordRequest.class,
       responseType = TheRecord.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<TheRecordRequest,
-      TheRecord> getGetOneRecordMethod() {
-    io.grpc.MethodDescriptor<TheRecordRequest, TheRecord> getGetOneRecordMethod;
-    if ((getGetOneRecordMethod = TestServiceGrpc.getGetOneRecordMethod) == null) {
+      TheRecord> getReadRecordMethod() {
+    io.grpc.MethodDescriptor<TheRecordRequest, TheRecord> getReadRecordMethod;
+    if ((getReadRecordMethod = TestServiceGrpc.getReadRecordMethod) == null) {
       synchronized (TestServiceGrpc.class) {
-        if ((getGetOneRecordMethod = TestServiceGrpc.getGetOneRecordMethod) == null) {
-          TestServiceGrpc.getGetOneRecordMethod = getGetOneRecordMethod =
+        if ((getReadRecordMethod = TestServiceGrpc.getReadRecordMethod) == null) {
+          TestServiceGrpc.getReadRecordMethod = getReadRecordMethod =
               io.grpc.MethodDescriptor.<TheRecordRequest, TheRecord>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getOneRecord"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "readRecord"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   TheRecordRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   TheRecord.getDefaultInstance()))
-              .setSchemaDescriptor(new TestServiceMethodDescriptorSupplier("getOneRecord"))
+              .setSchemaDescriptor(new TestServiceMethodDescriptorSupplier("readRecord"))
               .build();
         }
       }
     }
-    return getGetOneRecordMethod;
+    return getReadRecordMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<AllRecordsRequest,
+      TheRecordResponse> getReadAllRecordsIdsMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "readAllRecordsIds",
+      requestType = AllRecordsRequest.class,
+      responseType = TheRecordResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<AllRecordsRequest,
+      TheRecordResponse> getReadAllRecordsIdsMethod() {
+    io.grpc.MethodDescriptor<AllRecordsRequest, TheRecordResponse> getReadAllRecordsIdsMethod;
+    if ((getReadAllRecordsIdsMethod = TestServiceGrpc.getReadAllRecordsIdsMethod) == null) {
+      synchronized (TestServiceGrpc.class) {
+        if ((getReadAllRecordsIdsMethod = TestServiceGrpc.getReadAllRecordsIdsMethod) == null) {
+          TestServiceGrpc.getReadAllRecordsIdsMethod = getReadAllRecordsIdsMethod =
+              io.grpc.MethodDescriptor.<AllRecordsRequest, TheRecordResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "readAllRecordsIds"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  AllRecordsRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  TheRecordResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new TestServiceMethodDescriptorSupplier("readAllRecordsIds"))
+              .build();
+        }
+      }
+    }
+    return getReadAllRecordsIdsMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<TheRecordRequest,
+      TheRecordResponse> getDeleteRecordMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "deleteRecord",
+      requestType = TheRecordRequest.class,
+      responseType = TheRecordResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<TheRecordRequest,
+      TheRecordResponse> getDeleteRecordMethod() {
+    io.grpc.MethodDescriptor<TheRecordRequest, TheRecordResponse> getDeleteRecordMethod;
+    if ((getDeleteRecordMethod = TestServiceGrpc.getDeleteRecordMethod) == null) {
+      synchronized (TestServiceGrpc.class) {
+        if ((getDeleteRecordMethod = TestServiceGrpc.getDeleteRecordMethod) == null) {
+          TestServiceGrpc.getDeleteRecordMethod = getDeleteRecordMethod =
+              io.grpc.MethodDescriptor.<TheRecordRequest, TheRecordResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "deleteRecord"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  TheRecordRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  TheRecordResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new TestServiceMethodDescriptorSupplier("deleteRecord"))
+              .build();
+        }
+      }
+    }
+    return getDeleteRecordMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<ThePhotoRequest,
+      ThePhotoResponse> getGetPhotoMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "getPhoto",
+      requestType = ThePhotoRequest.class,
+      responseType = ThePhotoResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<ThePhotoRequest,
+      ThePhotoResponse> getGetPhotoMethod() {
+    io.grpc.MethodDescriptor<ThePhotoRequest, ThePhotoResponse> getGetPhotoMethod;
+    if ((getGetPhotoMethod = TestServiceGrpc.getGetPhotoMethod) == null) {
+      synchronized (TestServiceGrpc.class) {
+        if ((getGetPhotoMethod = TestServiceGrpc.getGetPhotoMethod) == null) {
+          TestServiceGrpc.getGetPhotoMethod = getGetPhotoMethod =
+              io.grpc.MethodDescriptor.<ThePhotoRequest, ThePhotoResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getPhoto"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  ThePhotoRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  ThePhotoResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new TestServiceMethodDescriptorSupplier("getPhoto"))
+              .build();
+        }
+      }
+    }
+    return getGetPhotoMethod;
   }
 
   /**
@@ -279,23 +341,37 @@ public final class TestServiceGrpc {
 
     /**
      */
-    public io.grpc.stub.StreamObserver<TheRecord> sendRecords(
-        io.grpc.stub.StreamObserver<TheResponse> responseObserver) {
-      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getSendRecordsMethod(), responseObserver);
+    public void saveRecord(TheRecord request,
+        io.grpc.stub.StreamObserver<TheRecordResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSaveRecordMethod(), responseObserver);
     }
 
     /**
      */
-    public void getAllRecords(TheRecordRequest request,
+    public void readRecord(TheRecordRequest request,
         io.grpc.stub.StreamObserver<TheRecord> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetAllRecordsMethod(), responseObserver);
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReadRecordMethod(), responseObserver);
     }
 
     /**
      */
-    public void getOneRecord(TheRecordRequest request,
-        io.grpc.stub.StreamObserver<TheRecord> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetOneRecordMethod(), responseObserver);
+    public void readAllRecordsIds(AllRecordsRequest request,
+        io.grpc.stub.StreamObserver<TheRecordResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReadAllRecordsIdsMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void deleteRecord(TheRecordRequest request,
+        io.grpc.stub.StreamObserver<TheRecordResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteRecordMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void getPhoto(ThePhotoRequest request,
+        io.grpc.stub.StreamObserver<ThePhotoResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetPhotoMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -322,26 +398,40 @@ public final class TestServiceGrpc {
                 TheResponse>(
                   this, METHODID_STREAM_TO_SRV)))
           .addMethod(
-            getSendRecordsMethod(),
-            io.grpc.stub.ServerCalls.asyncClientStreamingCall(
+            getSaveRecordMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
                 TheRecord,
-                TheResponse>(
-                  this, METHODID_SEND_RECORDS)))
+                TheRecordResponse>(
+                  this, METHODID_SAVE_RECORD)))
           .addMethod(
-            getGetAllRecordsMethod(),
-            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
-              new MethodHandlers<
-                TheRecordRequest,
-                TheRecord>(
-                  this, METHODID_GET_ALL_RECORDS)))
-          .addMethod(
-            getGetOneRecordMethod(),
+            getReadRecordMethod(),
             io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
                 TheRecordRequest,
                 TheRecord>(
-                  this, METHODID_GET_ONE_RECORD)))
+                  this, METHODID_READ_RECORD)))
+          .addMethod(
+            getReadAllRecordsIdsMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                AllRecordsRequest,
+                TheRecordResponse>(
+                  this, METHODID_READ_ALL_RECORDS_IDS)))
+          .addMethod(
+            getDeleteRecordMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                TheRecordRequest,
+                TheRecordResponse>(
+                  this, METHODID_DELETE_RECORD)))
+          .addMethod(
+            getGetPhotoMethod(),
+            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+              new MethodHandlers<
+                ThePhotoRequest,
+                ThePhotoResponse>(
+                  this, METHODID_GET_PHOTO)))
           .build();
     }
   }
@@ -392,26 +482,42 @@ public final class TestServiceGrpc {
 
     /**
      */
-    public io.grpc.stub.StreamObserver<TheRecord> sendRecords(
-        io.grpc.stub.StreamObserver<TheResponse> responseObserver) {
-      return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
-          getChannel().newCall(getSendRecordsMethod(), getCallOptions()), responseObserver);
+    public void saveRecord(TheRecord request,
+        io.grpc.stub.StreamObserver<TheRecordResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getSaveRecordMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void getAllRecords(TheRecordRequest request,
-        io.grpc.stub.StreamObserver<TheRecord> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
-          getChannel().newCall(getGetAllRecordsMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
-    public void getOneRecord(TheRecordRequest request,
+    public void readRecord(TheRecordRequest request,
         io.grpc.stub.StreamObserver<TheRecord> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getGetOneRecordMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getReadRecordMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void readAllRecordsIds(AllRecordsRequest request,
+        io.grpc.stub.StreamObserver<TheRecordResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getReadAllRecordsIdsMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void deleteRecord(TheRecordRequest request,
+        io.grpc.stub.StreamObserver<TheRecordResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getDeleteRecordMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void getPhoto(ThePhotoRequest request,
+        io.grpc.stub.StreamObserver<ThePhotoResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+          getChannel().newCall(getGetPhotoMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -452,17 +558,38 @@ public final class TestServiceGrpc {
 
     /**
      */
-    public java.util.Iterator<TheRecord> getAllRecords(
-        TheRecordRequest request) {
-      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
-          getChannel(), getGetAllRecordsMethod(), getCallOptions(), request);
+    public TheRecordResponse saveRecord(TheRecord request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSaveRecordMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public TheRecord getOneRecord(TheRecordRequest request) {
+    public TheRecord readRecord(TheRecordRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getGetOneRecordMethod(), getCallOptions(), request);
+          getChannel(), getReadRecordMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public TheRecordResponse readAllRecordsIds(AllRecordsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getReadAllRecordsIdsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public TheRecordResponse deleteRecord(TheRecordRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getDeleteRecordMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public java.util.Iterator<ThePhotoResponse> getPhoto(
+        ThePhotoRequest request) {
+      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+          getChannel(), getGetPhotoMethod(), getCallOptions(), request);
     }
   }
 
@@ -496,19 +623,45 @@ public final class TestServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<TheRecord> getOneRecord(
+    public com.google.common.util.concurrent.ListenableFuture<TheRecordResponse> saveRecord(
+        TheRecord request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getSaveRecordMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<TheRecord> readRecord(
         TheRecordRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getGetOneRecordMethod(), getCallOptions()), request);
+          getChannel().newCall(getReadRecordMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<TheRecordResponse> readAllRecordsIds(
+        AllRecordsRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getReadAllRecordsIdsMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<TheRecordResponse> deleteRecord(
+        TheRecordRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getDeleteRecordMethod(), getCallOptions()), request);
     }
   }
 
   private static final int METHODID_UNARY_PROCEDURE = 0;
   private static final int METHODID_STREAM_PROCEDURE = 1;
-  private static final int METHODID_GET_ALL_RECORDS = 2;
-  private static final int METHODID_GET_ONE_RECORD = 3;
-  private static final int METHODID_STREAM_TO_SRV = 4;
-  private static final int METHODID_SEND_RECORDS = 5;
+  private static final int METHODID_SAVE_RECORD = 2;
+  private static final int METHODID_READ_RECORD = 3;
+  private static final int METHODID_READ_ALL_RECORDS_IDS = 4;
+  private static final int METHODID_DELETE_RECORD = 5;
+  private static final int METHODID_GET_PHOTO = 6;
+  private static final int METHODID_STREAM_TO_SRV = 7;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -535,13 +688,25 @@ public final class TestServiceGrpc {
           serviceImpl.streamProcedure((TheRequest) request,
               (io.grpc.stub.StreamObserver<TheResponse>) responseObserver);
           break;
-        case METHODID_GET_ALL_RECORDS:
-          serviceImpl.getAllRecords((TheRecordRequest) request,
+        case METHODID_SAVE_RECORD:
+          serviceImpl.saveRecord((TheRecord) request,
+              (io.grpc.stub.StreamObserver<TheRecordResponse>) responseObserver);
+          break;
+        case METHODID_READ_RECORD:
+          serviceImpl.readRecord((TheRecordRequest) request,
               (io.grpc.stub.StreamObserver<TheRecord>) responseObserver);
           break;
-        case METHODID_GET_ONE_RECORD:
-          serviceImpl.getOneRecord((TheRecordRequest) request,
-              (io.grpc.stub.StreamObserver<TheRecord>) responseObserver);
+        case METHODID_READ_ALL_RECORDS_IDS:
+          serviceImpl.readAllRecordsIds((AllRecordsRequest) request,
+              (io.grpc.stub.StreamObserver<TheRecordResponse>) responseObserver);
+          break;
+        case METHODID_DELETE_RECORD:
+          serviceImpl.deleteRecord((TheRecordRequest) request,
+              (io.grpc.stub.StreamObserver<TheRecordResponse>) responseObserver);
+          break;
+        case METHODID_GET_PHOTO:
+          serviceImpl.getPhoto((ThePhotoRequest) request,
+              (io.grpc.stub.StreamObserver<ThePhotoResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -555,9 +720,6 @@ public final class TestServiceGrpc {
       switch (methodId) {
         case METHODID_STREAM_TO_SRV:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.streamToSrv(
-              (io.grpc.stub.StreamObserver<TheResponse>) responseObserver);
-        case METHODID_SEND_RECORDS:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.sendRecords(
               (io.grpc.stub.StreamObserver<TheResponse>) responseObserver);
         default:
           throw new AssertionError();
@@ -613,9 +775,11 @@ public final class TestServiceGrpc {
               .addMethod(getUnaryProcedureMethod())
               .addMethod(getStreamProcedureMethod())
               .addMethod(getStreamToSrvMethod())
-              .addMethod(getSendRecordsMethod())
-              .addMethod(getGetAllRecordsMethod())
-              .addMethod(getGetOneRecordMethod())
+              .addMethod(getSaveRecordMethod())
+              .addMethod(getReadRecordMethod())
+              .addMethod(getReadAllRecordsIdsMethod())
+              .addMethod(getDeleteRecordMethod())
+              .addMethod(getGetPhotoMethod())
               .build();
         }
       }

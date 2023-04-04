@@ -6,8 +6,14 @@ public interface TheRecordRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 recordPosition = 1;</code>
-   * @return The recordPosition.
+   * <code>string recordId = 1;</code>
+   * @return The recordId.
    */
-  int getRecordPosition();
+  java.lang.String getRecordId();
+  /**
+   * <code>string recordId = 1;</code>
+   * @return The bytes for recordId.
+   */
+  com.google.protobuf.ByteString
+      getRecordIdBytes();
 }
