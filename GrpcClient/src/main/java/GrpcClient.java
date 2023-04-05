@@ -24,7 +24,7 @@ public class GrpcClient {
         bStub = TestServiceGrpc.newBlockingStub(channel);
         nStub = TestServiceGrpc.newStub(channel);
         Scanner scanner = new Scanner(System.in);
-        int option = scanner.nextInt();
+        int option = 20;
         while(option != 0) {
 
             printMenu();
@@ -100,6 +100,7 @@ public class GrpcClient {
                 break;
             case 3:
                 readAllRecordsIds(bStub);
+                break;
             case 4:
                 deleteRecord(input, bStub);
                 break;
