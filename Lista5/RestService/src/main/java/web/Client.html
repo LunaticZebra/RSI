@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Klient</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         function getItem()
         {
-            var id = $("id_val").val();
-
+            var id = $("#id_val").val();
             $.ajax({
                 type: "GET",
                 url: "http://localhost:8080/fish/" + id,
@@ -17,7 +17,7 @@
                 .done(function(msg){
                     document.getElementById("name").value=msg.name;
                     document.getElementById("weight").value =msg.weight;
-                    document.getElementById("saltwater").value = msg.saltwater;
+                    document.getElementById("saltwater").checked = msg.saltwater
                 })
                 .fail(function(errMsg){
                     alert(JSON.stringify(errMsg))
@@ -31,7 +31,7 @@
                 id: $("#id_val").val(),
                 name: $("#name").val(),
                 weight: $("#weight").val(),
-                saltwater: $("#saltwater").val()
+                saltwater: $("#saltwater").is(":checked")
             }
             $.ajax({
                 type: "POST",
@@ -51,8 +51,6 @@
     <script type="text/javascript">
         function getAllItems()
         {
-            var id = $("id_val").val();
-
             $.ajax({
                 type: "GET",
                 url: "http://localhost:8080/fish",
@@ -87,7 +85,7 @@
     <script type="text/javascript">
         function deleteItem()
         {
-            var id = $("id_val").val();
+            var id = $("#id_val").val();
 
             $.ajax({
                 type: "DELETE",
@@ -110,19 +108,19 @@
                 id: $("#id_val").val(),
                 name: $("#name").val(),
                 weight: $("#weight").val(),
-                saltwater: $("#saltwater").val()
+                saltwater: $("#saltwater").is(":checked")
             }
             $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/fish/" + id,
+                type: "PUT",
+                url: "http://localhost:8080/fish/" + item.id,
                 data: JSON.stringify(item),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json"
             })
-                .done(function (msg){
-                    alert("Item is stored")
+                .success(function (msg){
+                    alert("Item has been updated")
                 })
-                .fail(function (errMsg){
+                .error(function (errMsg){
                     alert(JSON.stringify(errMsg))
                 })
         }
@@ -142,12 +140,12 @@
                 <td><input id = "id_val" type="text" /></td>
                 <td><input id = "name" type="text" /></td>
                 <td><input id = "weight" type="text" /></td>
-                <td><input id = "saltwater" type="checkbox" /></td>
+                <td><input id = "saltwater" type="checkbox"/></td>
                 <td><button type ="button" id="read" onclick="getItem()">Read</button></td>
-                <td><button type ="button" id="add" onclick="getItem()">Add</button></td>
-                <td><button type ="button" id="update" onclick="getItem()">Update</button></td>
-                <td><button type ="button" id="delete" onclick="getItem()">Delete</button></td>
-                <td><button type ="button" id="readAll" onclick="getItem()">ReadAll</button></td>
+                <td><button type ="button" id="add" onclick="addItem()">Add</button></td>
+                <td><button type ="button" id="update" onclick="updateItem()">Update</button></td>
+                <td><button type ="button" id="delete" onclick="deleteItem()">Delete</button></td>
+                <td><button type ="button" id="readAll" onclick="getAllItems()">ReadAll</button></td>
             </tr>
         </table>
     </form>
