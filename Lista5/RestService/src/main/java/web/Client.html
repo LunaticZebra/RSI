@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Klient</title>
+    <script type="text/javascript">
+        function getItem()
+        {
+            var id = $("id_val").val();
+
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/fish/" + id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function(msg){
+                    document.getElementById("name").value=msg.name;
+                    document.getElementById("weight").value =msg.weight;
+                    document.getElementById("saltwater").value = msg.saltwater;
+                })
+                .fail(function(errMsg){
+                    alert(JSON.stringify(errMsg))
+                });
+        }
+    </script>
+    <script type="text/javascript">
+        function addItem()
+        {
+            var item = {
+                id: $("#id_val").val(),
+                name: $("#name").val(),
+                weight: $("#weight").val(),
+                saltwater: $("#saltwater").val()
+            }
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/fish",
+                data: JSON.stringify(item),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function (msg){
+                    alert("Item is stored")
+                })
+                .fail(function (errMsg){
+                    alert(JSON.stringify(errMsg))
+                })
+        }
+    </script>
+    <script type="text/javascript">
+        function getAllItems()
+        {
+            var id = $("id_val").val();
+
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/fish",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function(msg){
+                   showItems(msg)
+                })
+                .fail(function(errMsg){
+                    alert(JSON.stringify(errMsg))
+                });
+        }
+    </script>
+    <script type="text/javascript">
+        function showItems(msg)
+        {
+            $("#itemtable tbody").remove();
+            $.each(msg, function (id, item) {
+                if ($("#itemtable tbody").length == 0) {
+                    $("#itemtable").append("<tbody></tbody>");
+                }
+                $("#itemtable tbody").append("<tr>" +
+                    "<td>" + item.id + "</td>" +
+                    "<td>" + item.name + "</td>" +
+                    "<td>" + item.weight + "</td>" +
+                    "<td>" + item.saltwater + "</td>" +
+                    "</tr>");
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function deleteItem()
+        {
+            var id = $("id_val").val();
+
+            $.ajax({
+                type: "DELETE",
+                url: "http://localhost:8080/fish/" + id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function(msg){
+                    alert("Item has been deleted")
+                })
+                .fail(function(errMsg){
+                    alert(JSON.stringify(errMsg))
+                });
+        }
+    </script>
+    <script type="text/javascript">
+        function updateItem()
+        {
+            var item = {
+                id: $("#id_val").val(),
+                name: $("#name").val(),
+                weight: $("#weight").val(),
+                saltwater: $("#saltwater").val()
+            }
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/fish/" + id,
+                data: JSON.stringify(item),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function (msg){
+                    alert("Item is stored")
+                })
+                .fail(function (errMsg){
+                    alert(JSON.stringify(errMsg))
+                })
+        }
+    </script>
+</head>
+<body>
+    <h2 style="margin-top:10px;margin-bottom:25px;">Operacje</h2>
+    <form>
+        <table id = "itemoperation" cellpadding="1">
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Weight</td>
+                <td>IsSaltwater</td>
+            </tr>
+            <tr>
+                <td><input id = "id_val" type="text" /></td>
+                <td><input id = "name" type="text" /></td>
+                <td><input id = "weight" type="text" /></td>
+                <td><input id = "saltwater" type="checkbox" /></td>
+                <td><button type ="button" id="read" onclick="getItem()">Read</button></td>
+                <td><button type ="button" id="add" onclick="getItem()">Add</button></td>
+                <td><button type ="button" id="update" onclick="getItem()">Update</button></td>
+                <td><button type ="button" id="delete" onclick="getItem()">Delete</button></td>
+                <td><button type ="button" id="readAll" onclick="getItem()">ReadAll</button></td>
+            </tr>
+        </table>
+    </form>
+    <table id="itemtable"></table>
+</body>
+</html>
