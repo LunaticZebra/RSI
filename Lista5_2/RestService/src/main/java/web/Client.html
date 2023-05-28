@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Klient</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        function updateButtons(links) {
+          if (links.hasOwnProperty("order fish")) {
+            $("#order").show();
+          } else {
+            $("#order").hide();
+          }
+
+          if (links.hasOwnProperty("cook fish")) {
+            $("#cook").show();
+          } else {
+            $("#cook").hide();
+          }
+
+          if (links.hasOwnProperty("pay for fish")) {
+              $("#pay").show();
+          }
+          else {
+              $("#pay").hide();
+          }
+    }
+    </script>
+    <script type="text/javascript">
+        function getItem()
+        {
+            var id = $("#id_val").val();
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/fish/" + id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function(msg){
+                    document.getElementById("name").value=msg.name;
+                    document.getElementById("weight").value =msg.weight;
+                    document.getElementById("saltwater").checked = msg.saltwater
+                    updateButtons(msg._links)
+                })
+                .fail(function(errMsg){
+                    alert(JSON.stringify(errMsg))
+                });
+        }
+    </script>
+    <script type="text/javascript">
+        function addItem()
+        {
+            var item = {
+                id: $("#id_val").val(),
+                name: $("#name").val(),
+                weight: $("#weight").val(),
+                saltwater: $("#saltwater").is(":checked")
+            }
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/fish",
+                data: JSON.stringify(item),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function (msg){
+                    alert("Item is stored")
+                    getAllItems()
+                })
+                .fail(function (errMsg){
+                    alert(JSON.stringify(errMsg))
+                })
+        }
+    </script>
+    <script type="text/javascript">
+        function getAllItems()
+        {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/fish",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function(msg){
+                    showItems(msg)
+                })
+                .fail(function(errMsg){
+                    alert(JSON.stringify(errMsg))
+                });
+        }
+    </script>
+    <script type="text/javascript">
+        function showItems(msg) {
+            var fishList = msg._embedded.fishList; // Access the fishList array directly
+            $("#itemtable tbody").remove();
+            $.each(fishList, function (index, fish) {
+                if ($("#itemtable tbody").length == 0) {
+                    $("#itemtable").append("<tbody></tbody>");
+                }
+                $("#itemtable tbody").append("<tr>" +
+                    "<td>" + fish.id + "</td>" +
+                    "<td>" + fish.name + "</td>" +
+                    "<td>" + fish.weight + "</td>" +
+                    "<td>" + fish.saltwater + "</td>" +
+                    "<td>" + fish.fishStatus + "</td>" +
+                    "</tr>");
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function deleteItem()
+        {
+            var id = $("#id_val").val();
+
+            $.ajax({
+                type: "DELETE",
+                url: "http://localhost:8080/fish/" + id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function(msg){
+                    alert("Item has been deleted")
+                    getAllItems()
+                })
+                .fail(function(errMsg){
+                    alert(JSON.stringify(errMsg))
+                });
+        }
+    </script>
+    <script type="text/javascript">
+        function updateItem()
+        {
+            var item = {
+                id: $("#id_val").val(),
+                name: $("#name").val(),
+                weight: $("#weight").val(),
+                saltwater: $("#saltwater").is(":checked")
+            }
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost:8080/fish/" + item.id,
+                data: JSON.stringify(item),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function (msg){
+                    alert("Item has been updated")
+                    getAllItems()
+                })
+                .fail(function (errMsg){
+                    alert(JSON.stringify(errMsg))
+                })
+        }
+    </script>
+    <script type="text/javascript">
+        function orderItem()
+        {
+            var item = {
+                id: $("#id_val").val(),
+            }
+            $.ajax({
+                type: "PATCH",
+                url: "http://localhost:8080/fish/" + item.id + "/order",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function (msg){
+                    if(ms)
+                    alert("Item has been ordered")
+                    getAllItems()
+                })
+                .fail(function (errMsg){
+                    alert(JSON.stringify(errMsg))
+                })
+        }
+    </script>
+    <script type="text/javascript">
+        function cookItem()
+        {
+            var item = {
+                id: $("#id_val").val(),
+            }
+            $.ajax({
+                type: "PATCH",
+                url: "http://localhost:8080/fish/" + item.id + "/cook",
+                contentType: "application/json; charset=utf-8",
+                data: '',
+                dataType: "json"
+            })
+                .done(function (msg){
+                    alert("Item has been cooked")
+                    getAllItems()
+                })
+                .fail(function (errMsg){
+                    alert(JSON.stringify(errMsg))
+                })
+        }
+    </script>
+    <script type="text/javascript">
+        function payForItem()
+        {
+            var item = {
+                id: $("#id_val").val(),
+            }
+            $.ajax({
+                type: "PATCH",
+                url: "http://localhost:8080/fish/" + item.id + "/pay",
+                contentType: "application/json; charset=utf-8",
+                data: '',
+                dataType: "json"
+            })
+                .done(function (msg){
+                    alert("Item has been paid for")
+                    getAllItems()
+                })
+                .fail(function (errMsg){
+                    alert(JSON.stringify(errMsg))
+                })
+        }
+    </script>
+</head>
+<body>
+    <h2 style="margin-top:10px;margin-bottom:25px;">Operacje</h2>
+    <form>
+        <table id = "itemoperation" cellpadding="1">
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Weight</td>
+                <td>IsSaltwater</td>
+            </tr>
+            <tr>
+                <td><input id = "id_val" type="text" /></td>
+                <td><input id = "name" type="text" /></td>
+                <td><input id = "weight" type="text" /></td>
+                <td><input id = "saltwater" type="checkbox"/></td>
+                <td><button type ="button" id="read" onclick="getItem()">Read</button></td>
+                <td><button type ="button" id="add" onclick="addItem()">Add</button></td>
+                <td><button type ="button" id="update" onclick="updateItem()">Update</button></td>
+                <td><button type ="button" id="delete" onclick="deleteItem()">Delete</button></td>
+                <td><button type ="button" id="readAll" onclick="getAllItems()">ReadAll</button></td>
+                <td><button type ="button" id="order" onclick="orderItem()">Order</button></td>
+                <td><button type ="button" id="cook" onclick="cookItem()">Cook</button></td>
+                <td><button type ="button" id="pay" onclick="payForItem()">Pay</button></td>
+            </tr>
+        </table>
+    </form>
+    <table id="itemtable"></table>
+</body>
+</html>
