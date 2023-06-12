@@ -2,6 +2,8 @@ package consumers;
 
 import com.rabbitmq.client.*;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Scanner;
@@ -32,6 +34,16 @@ public class ConsumerService1 {
                                            byte[] body) throws IOException {
                     String msg = new String(body, "UTF-8");
                     Date currentDate = new Date(System.currentTimeMillis());
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/logs/standardLog.txt", true))) {
+                        // Write the current system time to the file
+                        writer.write(msg);
+                        writer.newLine();
+
+                        System.out.println("Successfully wrote to the file.");
+                    } catch (IOException e) {
+                        System.out.println("An error occurred while writing to the file.");
+                        e.printStackTrace();
+                    }
                     System.out.println("Log " + currentDate + " : - " + msg);
                     System.out.println(envelope.getRoutingKey());
                 }
